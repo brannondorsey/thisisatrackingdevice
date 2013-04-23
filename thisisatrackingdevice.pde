@@ -17,10 +17,11 @@ import codeanticode.glgraphics.*;
 
 UnfoldingMap map;
 GPXHandler gpxHandler;
+PointVisualization ptVis;
 Location[] pts;
 SimpleLinesMarker linePoints;
 String fileToParse = "marathon.xml";
-color c = #367AD6;
+color c = #3475CE;
 
 void setup() {
   size(screen.width, screen.height, GLConstants.GLGRAPHICS);
@@ -33,18 +34,22 @@ void setup() {
   MapUtils.createDefaultEventDispatcher(this, map);
   XMLElement gpxDoc = new XMLElement(this, fileToParse);
   gpxHandler = new GPXHandler(gpxDoc);
+  ptVis = new PointVisualization();
   
   Location cent = gpxHandler.getCenter();
   map.zoomAndPanTo(cent, zoom);
   map.setPanningRestriction(cent, maxPanningDistance);
   map.setZoomRange(zoom, 18);
-  linePoints = new SimpleLinesMarker(gpxHandler.getLocations());
+  
+  linePoints = new SimpleLinesMarker(gpxHandler.getLocations()); 
 }
 
 void draw() {
   linePoints.setColor(c);
-  linePoints.setStrokeWeight(4);
+  linePoints.setStrokeWeight(3);
   map.addMarkers(linePoints);
   map.draw();
+  ptVis.initMarkers(gpxHandler.getLocations());
+  ptVis.displayStart();
 }
 

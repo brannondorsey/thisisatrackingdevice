@@ -5,7 +5,7 @@ class TrackPoint{
  TrackPoint(float _lat, float _lon, String _timestamp){
   loc = new Location(_lat, _lon);
   timestamp = _timestamp;
- } 
+ }
  
  float getLat(){
    return loc.getLat();
