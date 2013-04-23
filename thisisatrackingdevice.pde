@@ -37,6 +37,7 @@ void setup() {
   Location cent = gpxHandler.getCenter();
   map.zoomAndPanTo(cent, zoom);
   map.setPanningRestriction(cent, maxPanningDistance);
+  map.setZoomRange(zoom, 18);
   linePoints = new SimpleLinesMarker(gpxHandler.getLocations());
 }
 
