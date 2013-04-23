@@ -42,6 +42,9 @@ void setup() {
   map.setZoomRange(zoom, 18);
   
   linePoints = new SimpleLinesMarker(gpxHandler.getLocations()); 
+  ptVis.initMarkers(gpxHandler.getLocations());
+  ptVis.createMarkers();
+  ptVis.clearScreenpos();
 }
 
 void draw() {
@@ -49,7 +52,11 @@ void draw() {
   linePoints.setStrokeWeight(3);
   map.addMarkers(linePoints);
   map.draw();
-  ptVis.initMarkers(gpxHandler.getLocations());
-  ptVis.displayStart();
+  for(int i = 0; i < ptVis.markers.size(); i++){
+    PointMarker currentMarker = ptVis.markers.get(i);
+    //ScreenPosition currentScreenpos = currentMarker.pos;
+    currentMarker.display();
+  }
+  //ptVis.displayStart();
 }
 
