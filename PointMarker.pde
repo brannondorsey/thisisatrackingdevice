@@ -20,7 +20,7 @@ class PointMarker {
     ScreenPosition nextPos = n.getScreenPosition(map);
     markerImg = loadImage("marker.png");
     angle = ScreenPosition.angleBetween(pos, nextPos);
-    println("the angle is "+angle);
+    //println("the angle is "+angle);
     //println("the current location is "+loc.getLat()+", "+loc.getLon()+". the next location is "+nextLoc.getLat()+", "+nextLoc.getLon()+".");   
   }
 
@@ -40,7 +40,10 @@ class PointMarker {
 
   void update() {
     pos = m.getScreenPosition(map);
-    if (isOver(mouseX, mouseY)) s = 30;
+    if (isOver(mouseX, mouseY)){
+      s = 30;
+      strView.display(index);
+    }
     else s = 15;
     }
 

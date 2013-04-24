@@ -18,6 +18,7 @@ import codeanticode.glgraphics.*;
 UnfoldingMap map;
 GPXHandler gpxHandler;
 PointVisualization ptVis;
+StreetView strView;
 Location[] pts;
 SimpleLinesMarker linePoints;
 String fileToParse = "marathon.xml";
@@ -44,7 +45,7 @@ void setup() {
   
   linePoints = new SimpleLinesMarker(gpxHandler.getLocations()); 
   ptVis.createMarkers();
-  //ptVis.clearScreenpos();
+  strView = new StreetView();
 }
 
 void draw() {
