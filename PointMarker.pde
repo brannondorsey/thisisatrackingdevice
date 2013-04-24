@@ -42,7 +42,6 @@ class PointMarker {
     pos = m.getScreenPosition(map);
     if (isOver(mouseX, mouseY)){
       s = 30;
-      strView.display(index);
     }
     else s = 15;
     }

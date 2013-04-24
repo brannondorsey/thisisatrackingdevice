@@ -55,11 +55,18 @@ void draw() {
   map.draw();
   for(int i = 0; i < ptVis.markers.size(); i++){
     PointMarker currentMarker = ptVis.markers.get(i);
-    //ScreenPosition currentScreenpos = currentMarker.pos;
     currentMarker.update();
     currentMarker.display();
   }
  // gpxHandler.printAngleTest();
   ptVis.displayStart();
+  checkImageDisplay();
+}
+
+void checkImageDisplay(){
+  for(int i = 0; i < ptVis.markers.size(); i++){
+    PointMarker marker = ptVis.markers.get(i);
+    if(marker.isOver(mouseX, mouseY)) strView.display(i);
+  }
 }
 

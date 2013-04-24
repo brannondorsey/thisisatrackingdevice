@@ -3,7 +3,7 @@ class StreetView{
  PImage[] imgs;
  PGraphics[] pgs;
  PImage currentImg;
- int imgHeight = 150;
+ int imgHeight = 400; 
  int imgWidth = 640;
  float wide;
  float tall;
@@ -11,7 +11,7 @@ class StreetView{
  StreetView(){
   aspectRatio = imgWidth/imgHeight;
   wide = screen.width;
-  tall = wide/aspectRatio;
+  tall = screen.height;//wide/aspectRatio;
   imgs = new PImage[ptVis.markers.size()];
   pgs = new PGraphics[imgs.length];
   for(int i = 0; i < imgs.length; i++){
@@ -28,11 +28,13 @@ class StreetView{
  } 
  
  void display(int markerIndex){
+   //tint(#BED5F5);
    image(pgs[markerIndex], 0, screen.height-tall, wide, tall); 
+   //tint(255);
  }
  
  void stylePgs(int i, PImage img){
-   int pixelSize = 4;
+   int pixelSize = 10;
    img.loadPixels();
    pgs[i] = createGraphics((int) wide,(int) tall, P2D);
    PGraphics pg = pgs[i];
@@ -41,10 +43,11 @@ class StreetView{
    for (int x = 0; x < img.width; x += pixelSize) {
       for (int y = 0; y < img.height; y += pixelSize) {
         int pixLoc = int(x + y*img.width);
-        int fillColor = int(brightness(img.pixels[pixLoc]));
+        int fillColor = img.pixels[pixLoc];
         pg.fill(fillColor);
         pg.noStroke();
-        pg.ellipse(x, y, pixelSize, pixelSize);
+        pg.stroke(0);
+        pg.rect(x, y, pixelSize, pixelSize);
       }
    }
    pg.endDraw();
