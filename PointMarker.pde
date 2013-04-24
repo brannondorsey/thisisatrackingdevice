@@ -6,6 +6,9 @@ class PointMarker {
   SimplePointMarker m;
   PImage markerImg;
   int s;
+  int minS = 15;
+  int maxS = 30;
+  int growDistance = 100; 
   float angle;
   int index;
 
@@ -21,36 +24,37 @@ class PointMarker {
     markerImg = loadImage("marker.png");
     angle =  degrees((float) GeoUtils.getAngleBetween(loc, nextLoc));
     println("the angle is "+angle);
-    //println("the current location is "+loc.getLat()+", "+loc.getLon()+". the next location is "+nextLoc.getLat()+", "+nextLoc.getLon()+".");   
+    //println("the current location is "+loc.getLat()+", "+loc.getLon()+". the next location is "+nextLoc.getLat()+", "+nextLoc.getLon()+".");
+  }
+  
+  //updates screen positions
+  void update(){
+    pos = m.getScreenPosition(map);
   }
 
   void display() {
+    float distFromMarker = dist(mouseX, mouseY, pos.x, pos.y);
+    float distM = constrain(distFromMarker, 0, growDistance);
+    s = int(map(distM, 0, growDistance, maxS, minS));
+   
+    //s = 15;
     fill(#3475CE);
     SimplePointMarker m = new SimplePointMarker(loc);
     ScreenPosition pos =  m.getScreenPosition(map);
-//    ellipseMode(CENTER);
-//    ellipse(pos.x, pos.y, s, s);
+
     //pushMatrix();
-   //rotate(angle);
+    //rotate(angle);
     imageMode(CENTER);
     image(markerImg, pos.x, pos.y, s, s);
     imageMode(CORNER);
     //popMatrix();
   }
 
-  void update() {
-    pos = m.getScreenPosition(map);
-    if (isOver(mouseX, mouseY)){
-      s = 30;
-    }
-    else s = 15;
-    }
-
   boolean isOver(int mx, int my) {
-      float x = pos.x;
-      float y = pos.y;
-      if(dist(mx, my, x-(s/2), pos.y-(s/2)) <= s) return true;
-      else return false;
-    }
+    float x = pos.x;
+    float y = pos.y;
+    if (dist(mx, my, pos.x, pos.y) <= s) return true;
+    else return false;
+  }
 }
 
