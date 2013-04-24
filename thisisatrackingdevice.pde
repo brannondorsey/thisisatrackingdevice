@@ -66,6 +66,7 @@ void draw() {
 void checkImageDisplay(){
   for(int i = 0; i < ptVis.markers.size(); i++){
     PointMarker marker = ptVis.markers.get(i);
+    int offset = int(marker.s/2);
     if(marker.isOver(mouseX, mouseY)) strView.display(i);
   }
 }

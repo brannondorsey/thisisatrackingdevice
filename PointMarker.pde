@@ -42,18 +42,17 @@ class PointMarker {
     SimplePointMarker m = new SimplePointMarker(loc);
     ScreenPosition pos =  m.getScreenPosition(map);
 
-    //pushMatrix();
-    //rotate(angle);
-    imageMode(CENTER);
-    image(markerImg, pos.x, pos.y, s, s);
-    imageMode(CORNER);
-    //popMatrix();
+    pushMatrix();
+    translate(pos.x, pos.y);
+    rotate(radians(angle));
+    image(markerImg, -s/2, -s/2 , s, s);
+    popMatrix();
   }
 
   boolean isOver(int mx, int my) {
     float x = pos.x;
     float y = pos.y;
-    if (dist(mx, my, pos.x, pos.y) <= s) return true;
+    if (dist(mx, my, pos.x, pos.y) <= s/2) return true;
     else return false;
   }
 }
