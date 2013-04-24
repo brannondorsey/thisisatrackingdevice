@@ -19,8 +19,8 @@ class PointMarker {
     SimplePointMarker n = new SimplePointMarker(nextLoc);
     ScreenPosition nextPos = n.getScreenPosition(map);
     markerImg = loadImage("marker.png");
-    angle = ScreenPosition.angleBetween(pos, nextPos);
-    //println("the angle is "+angle);
+    angle =  degrees((float) GeoUtils.getAngleBetween(loc, nextLoc));
+    println("the angle is "+angle);
     //println("the current location is "+loc.getLat()+", "+loc.getLon()+". the next location is "+nextLoc.getLat()+", "+nextLoc.getLon()+".");   
   }
 
@@ -30,12 +30,12 @@ class PointMarker {
     ScreenPosition pos =  m.getScreenPosition(map);
 //    ellipseMode(CENTER);
 //    ellipse(pos.x, pos.y, s, s);
-    pushMatrix();
-    rotate(radians(angle));
+    //pushMatrix();
+   //rotate(angle);
     imageMode(CENTER);
     image(markerImg, pos.x, pos.y, s, s);
     imageMode(CORNER);
-    popMatrix();
+    //popMatrix();
   }
 
   void update() {
