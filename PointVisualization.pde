@@ -1,32 +1,19 @@
 class PointVisualization {
 
   GeoUtils geo; 
-  ArrayList<ScreenPosition> screenpos;
   ArrayList<PointMarker> markers;
-  ScreenPosition currentScreenpos;
-  float pointFrequency = 150; //in km
+  ArrayList<TrackPoint> trkptsCopy;
+  Location currentLocation;
+  Location nextLocation;
+  float pointFrequency = 100; //in km
   PImage cube;
 
-  PointVisualization() {
+  PointVisualization(ArrayList<TrackPoint> _trkptsCopy) {
     //geo = new GeoUtils();
-    screenpos = new ArrayList<ScreenPosition>();
+    trkptsCopy = _trkptsCopy;
     markers = new ArrayList<PointMarker>();
     cube = loadImage("cube.png");
   }
-
-  //  void init() {
-  //    TrackPoint currentTrackPoint = gpxHandler.trkpts.get(0);
-  //    for (int j = 0; j <gpxHandler.trkpts.size(); i++) {
-  //      if (j != i) testTrackpoint = gpxHandler.trkpts.get(j);
-  //      if (testTrackpoint != null) {
-  //        if (geo.getDistance(currentTrackpoint, testTrackpoint) >= pointFrequency) {
-  //          //draw marker here
-  //          break;
-  //        }
-  //        else continue;
-  //      }
-  //    }
-  //  }
 
   void display() {
   }
@@ -34,48 +21,60 @@ class PointVisualization {
   void displayStart() {
     int cubeSize = 30;
     tint(150, 150, 255);
-    ScreenPosition startPos = screenpos.get(0);
-    image(cube, startPos.x-(cubeSize/2), startPos.y-(cubeSize/2), cubeSize, cubeSize);
+    TrackPoint tempTrkpt = trkptsCopy.get(1);
+    Location startLoc = tempTrkpt.loc;
+    SimplePointMarker m = new SimplePointMarker(startLoc);
+    ScreenPosition startPos = m.getScreenPosition(map);
+    //image(cube, startPos.x-(cubeSize/2), startPos.y-(cubeSize/2), cubeSize, cubeSize);
     tint(255, 255, 255);
   }
 
   void createMarker() {
-    markers.add(new PointMarker(currentScreenpos));
-  }
-
-  void initMarkers(ArrayList<Location> pointLocations) {
-    int index = pointLocations.size();
-    for (int i = 0; i < index; i++) {
-      Location currentPoint = pointLocations.get(i);
-      SimplePointMarker tempMarker = new SimplePointMarker(currentPoint);
-      screenpos.add(tempMarker.getScreenPosition(map));
-    }
+    markers.add(new PointMarker(currentLocation, nextLocation));
   }
 
   void createMarkers() {
-    currentScreenpos = screenpos.get(0);
+    currentLocation = gpxHandler.trkpts.get(0).loc;
+    nextLocation = gpxHandler.trkpts.get(1).loc;
     testScreenpos();
   }
 
   void testScreenpos() {
-    int index = screenpos.indexOf(currentScreenpos);
-    if (index < screenpos.size()) {
-      for (int i = index+1; i < screenpos.size(); i++) {
-        ScreenPosition testScreenpos = screenpos.get(i);
+    int index = getIndexOf(currentLocation); //this might not work because it is querying the arraylist of TrackPoints for a Location that a trackpoint will contain
+    if (index < trkptsCopy.size()) {
+      SimplePointMarker tempMarker = new SimplePointMarker(currentLocation);
+      ScreenPosition currentScreenpos = tempMarker.getScreenPosition(map);
+      for (int i = index+1; i < trkptsCopy.size(); i++) {
+        TrackPoint testTrkpt = trkptsCopy.get(i);
+        TrackPoint nextTestTrkpt = trkptsCopy.get(i+1);
+        SimplePointMarker m = new SimplePointMarker(testTrkpt.loc);
+        SimplePointMarker nextM = new SimplePointMarker(nextTestTrkpt.loc);
+        ScreenPosition testScreenpos = m.getScreenPosition(map);
+        ScreenPosition nextTestScreenpos = nextM.getScreenPosition(map);
         if (dist(currentScreenpos.x, currentScreenpos.y, testScreenpos.x, testScreenpos.y) >= pointFrequency) {
           //reset currentScreenpos
           createMarker();
-          currentScreenpos = screenpos.get(i);
+          currentLocation = m.getLocation();
+          nextLocation = nextM.getLocation();
           break;
         }
         else continue;
       }
-      if(index < 1000) testScreenpos();
+      if (index < 1000) testScreenpos();
     }
+  }
+  
+  int getIndexOf(Location targetLoc){
+    ArrayList<Location> temp = new ArrayList<Location>();
+    for(int i = 0; i<trkptsCopy.size(); i++){
+      TrackPoint tempTrkpt = trkptsCopy.get(i);
+      temp.add(tempTrkpt.loc);
+    }
+    return temp.indexOf(targetLoc);
   }
 
   void clearScreenpos() {
-    screenpos.clear();
+    markers.clear();
   }
 }
 

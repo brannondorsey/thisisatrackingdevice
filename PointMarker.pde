@@ -1,17 +1,52 @@
 class PointMarker {
 
   Location loc;
+  Location nextLoc;
+  ScreenPosition pos;
+  SimplePointMarker m;
+  PImage markerImg;
+  int s;
+  float angle;
 
-  PointMarker(Location _loc) {
+  PointMarker(Location _loc, Location _nextLoc) {
     loc = _loc;
+    nextLoc = _nextLoc;
+    s = 15;
+    m = new SimplePointMarker(loc);
+    pos = m.getScreenPosition(map);
+    SimplePointMarker n = new SimplePointMarker(nextLoc);
+    ScreenPosition nextPos = n.getScreenPosition(map);
+    markerImg = loadImage("marker.png");
+    angle = ScreenPosition.angleBetween(pos, nextPos);
+    println("the angle is "+angle);
+    //println("the current location is "+loc.getLat()+", "+loc.getLon()+". the next location is "+nextLoc.getLat()+", "+nextLoc.getLon()+".");   
   }
 
   void display() {
     fill(#3475CE);
-    int s = 15;
     SimplePointMarker m = new SimplePointMarker(loc);
     ScreenPosition pos =  m.getScreenPosition(map);
-    ellipse(pos.x, pos.y, s, s);
+//    ellipseMode(CENTER);
+//    ellipse(pos.x, pos.y, s, s);
+    pushMatrix();
+    rotate(radians(angle));
+    imageMode(CENTER);
+    image(markerImg, pos.x, pos.y, s, s);
+    imageMode(CORNER);
+    popMatrix();
   }
+
+  void update() {
+    pos = m.getScreenPosition(map);
+    if (isOver(mouseX, mouseY)) s = 30;
+    else s = 15;
+    }
+
+  boolean isOver(int mx, int my) {
+      float x = pos.x;
+      float y = pos.y;
+      if(dist(mx, my, x-(s/2), pos.y-(s/2)) <= s) return true;
+      else return false;
+    }
 }
 

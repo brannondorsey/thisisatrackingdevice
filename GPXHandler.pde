@@ -17,6 +17,16 @@ class GPXHandler {
     minLon = getMinOrMax("min", "lon");
     maxLon = getMinOrMax("max", "lon");
   }
+  
+  void printAngleTest(){
+    Location loc1 = trkpts.get(114).loc;
+    Location loc2 = trkpts.get(115).loc;
+    float angle = PVector.angleBetween(loc1, loc2);
+    println("the first location is "+loc1);
+    println("the second location is "+loc2);
+    println("the angle between is "+angle);
+    println();
+  }
 
   void parseData() {
     int numEntries = gpxDoc.getChildCount();
@@ -68,4 +78,5 @@ class GPXHandler {
     return trkptsLocations;
   }
 }
+
 

@@ -25,26 +25,26 @@ color c = #3475CE;
 
 void setup() {
   size(screen.width, screen.height, GLConstants.GLGRAPHICS);
+  smooth();
   noStroke();
   
   int maxPanningDistance = 10; // in km
-  int zoom = 12;
+  int zoom = 13;
 
   map = new UnfoldingMap(this, new OpenStreetMap.CloudmadeProvider("038dee0bec3441f495c0dee8b72467fd", 93093));
   MapUtils.createDefaultEventDispatcher(this, map);
   XMLElement gpxDoc = new XMLElement(this, fileToParse);
   gpxHandler = new GPXHandler(gpxDoc);
-  ptVis = new PointVisualization();
+  ptVis = new PointVisualization(gpxHandler.trkpts);
   
   Location cent = gpxHandler.getCenter();
   map.zoomAndPanTo(cent, zoom);
   map.setPanningRestriction(cent, maxPanningDistance);
-  map.setZoomRange(zoom, 18);
+  map.setZoomRange(zoom-1, 18);
   
   linePoints = new SimpleLinesMarker(gpxHandler.getLocations()); 
-  ptVis.initMarkers(gpxHandler.getLocations());
   ptVis.createMarkers();
-  ptVis.clearScreenpos();
+  //ptVis.clearScreenpos();
 }
 
 void draw() {
@@ -55,8 +55,10 @@ void draw() {
   for(int i = 0; i < ptVis.markers.size(); i++){
     PointMarker currentMarker = ptVis.markers.get(i);
     //ScreenPosition currentScreenpos = currentMarker.pos;
+    currentMarker.update();
     currentMarker.display();
   }
-  //ptVis.displayStart();
+ // gpxHandler.printAngleTest();
+  ptVis.displayStart();
 }
 
