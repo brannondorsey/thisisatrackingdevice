@@ -7,10 +7,12 @@ class PointMarker {
   PImage markerImg;
   int s;
   float angle;
+  int index;
 
-  PointMarker(Location _loc, Location _nextLoc) {
+  PointMarker(int _index, Location _loc, Location _nextLoc) {
     loc = _loc;
     nextLoc = _nextLoc;
+    index = _index;
     s = 15;
     m = new SimplePointMarker(loc);
     pos = m.getScreenPosition(map);

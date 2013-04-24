@@ -5,8 +5,9 @@ class PointVisualization {
   ArrayList<TrackPoint> trkptsCopy;
   Location currentLocation;
   Location nextLocation;
-  float pointFrequency = 100; //in km
+  float pointFrequency = 100;
   PImage cube;
+  int markerIndex = 0;
 
   PointVisualization(ArrayList<TrackPoint> _trkptsCopy) {
     //geo = new GeoUtils();
@@ -30,7 +31,8 @@ class PointVisualization {
   }
 
   void createMarker() {
-    markers.add(new PointMarker(currentLocation, nextLocation));
+    markers.add(new PointMarker(markerIndex, currentLocation, nextLocation));
+    markerIndex++;
   }
 
   void createMarkers() {
