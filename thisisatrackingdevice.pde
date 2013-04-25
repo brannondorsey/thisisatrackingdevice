@@ -1,3 +1,4 @@
+import gifAnimation.*;
 import de.fhpotsdam.unfolding.mapdisplay.*;
 import de.fhpotsdam.unfolding.utils.*;
 import de.fhpotsdam.unfolding.marker.*;
@@ -45,20 +46,21 @@ void setup() {
   
   linePoints = new SimpleLinesMarker(gpxHandler.getLocations()); 
   ptVis.createMarkers();
-  strView = new StreetView();
-}
-
-void draw() {
+  PImage[] loadingGif = Gif.getPImages(this, "loading.gif");
+  strView = new StreetView(loadingGif);
+  
   linePoints.setColor(c);
   linePoints.setStrokeWeight(3);
   map.addMarkers(linePoints);
+}
+
+void draw() {
   map.draw();
   for(int i = 0; i < ptVis.markers.size(); i++){
     PointMarker currentMarker = ptVis.markers.get(i);
     currentMarker.update();
     currentMarker.display();
   }
- // gpxHandler.printAngleTest();
   ptVis.displayStart();
   checkImageDisplay();
 }
@@ -67,7 +69,10 @@ void checkImageDisplay(){
   for(int i = 0; i < ptVis.markers.size(); i++){
     PointMarker marker = ptVis.markers.get(i);
     int offset = int(marker.s/2);
-    if(marker.isOver(mouseX, mouseY)) strView.display(i);
+    if(marker.isOver(mouseX, mouseY)){ 
+      strView.loading();
+      strView.display(i);
+    }
   }
 }
 
