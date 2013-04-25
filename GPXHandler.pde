@@ -7,36 +7,23 @@ class GPXHandler {
     gpxDoc = _gpxDoc;
     trkpts = new ArrayList();
     parseData();
-    //    for (int i = 0; i < parsedDataMarkers.size();i++) {
-    //      Marker pt = parsedDataMarkers.get(i);
-    //      println("this points location is "+pt.getLocation());
-    //      pts.add(pt.getLocation());
-    //    }
     minLat = getMinOrMax("min", "lat");
     maxLat = getMinOrMax("max", "lat");
     minLon = getMinOrMax("min", "lon");
     maxLon = getMinOrMax("max", "lon");
   }
   
-  void printAngleTest(){
-    Location loc1 = trkpts.get(114).loc;
-    Location loc2 = trkpts.get(115).loc;
-    float angle = PVector.angleBetween(loc1, loc2);
-    println("the first location is "+loc1);
-    println("the second location is "+loc2);
-    println("the angle between is "+angle);
-    println();
-  }
-
-  void parseData() {
+    void parseData() {
     int numEntries = gpxDoc.getChildCount();
     // println(numEntries);
-    for (int i = 0; i < numEntries; i++) {
-      XMLElement allChildren = gpxDoc.getChild(i);
-      //println(allChildren);
-    }
-    XMLElement trk = gpxDoc.getChild(2);
-    XMLElement[] trkseg = trk.getChild(2).getChildren();
+    //    for (int i = 0; i < numEntries; i++) {
+    //      XMLElement allChildren = gpxDoc.getChild(i);
+    //      //println(allChildren);
+    //    }
+    int trkIndex = getNodeIndex("trk", numEntries);
+    XMLElement trk = gpxDoc.getChild(trkIndex);
+    int trkSegIndex = getNodeIndex("trkseg", trk.getChildCount());
+    XMLElement[] trkseg = trk.getChild(trkSegIndex).getChildren();
     int numTrkChildren = trkseg.length;
     println("the number of trackpoints is "+trkseg.length);
     for (int i = 0; i <numTrkChildren; i++) {
@@ -47,6 +34,17 @@ class GPXHandler {
       String timestamp = trkPtTimestamp.getContent();
       trkpts.add(new TrackPoint(lat, lon, timestamp));
     }
+  }
+
+  //finds location of desired node in gpxDoc
+  int getNodeIndex(String reqNode, int numChildren) {
+    for (int j = 0; j < numChildren; j++) {
+      XMLElement currentChild = gpxDoc.getChild(j);
+      if (currentChild.getName().equals("trk")) {
+        return j;
+      }
+    }
+    return -1; //did not find desired node
   }
 
   //i.e. getMin("max", "lat");
@@ -78,5 +76,4 @@ class GPXHandler {
     return trkptsLocations;
   }
 }
-
 

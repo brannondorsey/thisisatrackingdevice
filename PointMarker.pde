@@ -23,7 +23,6 @@ class PointMarker {
     ScreenPosition nextPos = n.getScreenPosition(map);
     markerImg = loadImage("marker.png");
     angle =  degrees((float) GeoUtils.getAngleBetween(loc, nextLoc));
-    println("the angle is "+angle);
     //println("the current location is "+loc.getLat()+", "+loc.getLon()+". the next location is "+nextLoc.getLat()+", "+nextLoc.getLon()+".");
   }
   

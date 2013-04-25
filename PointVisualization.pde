@@ -46,7 +46,7 @@ class PointVisualization {
     if (index < trkptsCopy.size()) {
       SimplePointMarker tempMarker = new SimplePointMarker(currentLocation);
       ScreenPosition currentScreenpos = tempMarker.getScreenPosition(map);
-      for (int i = index+1; i < trkptsCopy.size(); i++) {
+      for (int i = index+1; i < trkptsCopy.size()-1; i++) {
         TrackPoint testTrkpt = trkptsCopy.get(i);
         TrackPoint nextTestTrkpt = trkptsCopy.get(i+1);
         SimplePointMarker m = new SimplePointMarker(testTrkpt.loc);
@@ -62,7 +62,7 @@ class PointVisualization {
         }
         else continue;
       }
-      if (index < 1500) testScreenpos(); //1500 or 150
+      if (index < 150) testScreenpos(); //1500 or 150
     }
   }
   

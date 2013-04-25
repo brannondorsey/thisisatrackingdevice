@@ -22,7 +22,7 @@ PointVisualization ptVis;
 StreetView strView;
 Location[] pts;
 SimpleLinesMarker linePoints;
-String fileToParse = "marathon.xml";
+String fileToParse = "mccleanblock.xml";
 color c = #3475CE;
 
 void setup() {
@@ -31,7 +31,7 @@ void setup() {
   noStroke();
   
   int maxPanningDistance = 10; // in km
-  int zoom = 13; //13 or 17
+  int zoom = 17; //13 or 17
 
   map = new UnfoldingMap(this, new OpenStreetMap.CloudmadeProvider("038dee0bec3441f495c0dee8b72467fd", 93093));
   MapUtils.createDefaultEventDispatcher(this, map);
