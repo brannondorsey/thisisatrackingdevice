@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<gpx
+ version="1.0"
+ creator="GPX Master.app"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns="http://www.topografix.com/GPX/1/0"
+ xsi:schemaLocation="http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd">
+  <time>2013-04-25T13:44:00Z</time>
+  <trk>
+    <name>GPX Master Track - Apr 25, 2013 8:44 AM</name>
+    <trkseg>
+      <trkpt lat="41.884176" lon="-87.627464">
+        <ele>202</ele>
+        <time>2013-04-25T13:44:00Z</time>
+      </trkpt>
+      <trkpt lat="41.884183" lon="-87.627529">
+        <ele>205</ele>
+        <time>2013-04-25T13:44:01Z</time>
+      </trkpt>
+      <trkpt lat="41.884177" lon="-87.627876">
+        <ele>226</ele>
+        <time>2013-04-25T13:44:09Z</time>
+      </trkpt>
+      <trkpt lat="41.884155" lon="-87.627939">
+        <ele>221</ele>
+        <time>2013-04-25T13:44:10Z</time>
+      </trkpt>
+      <trkpt lat="41.884191" lon="-87.627942">
+        <ele>222</ele>
+        <time>2013-04-25T13:44:11Z</time>
+      </trkpt>
+      <trkpt lat="41.884236" lon="-87.627937">
+        <ele>222</ele>
+        <time>2013-04-25T13:44:12Z</time>
+      </trkpt>
+      <trkpt lat="41.884270" lon="-87.627959">
+        <ele>221</ele>
+        <time>2013-04-25T13:44:14Z</time>
+      </trkpt>
+      <trkpt lat="41.884302" lon="-87.627950">
+        <ele>221</ele>
+        <time>2013-04-25T13:44:18Z</time>
+      </trkpt>
+      <trkpt lat="41.884336" lon="-87.627918">
+        <ele>222</ele>
+        <time>2013-04-25T13:44:23Z</time>
+      </trkpt>
+      <trkpt lat="41.884251" lon="-87.628018">
+        <ele>223</ele>
+        <time>2013-04-25T13:44:35Z</time>
+      </trkpt>
+      <trkpt lat="41.884232" lon="-87.627991">
+        <ele>224</ele>
+        <time>2013-04-25T13:44:37Z</time>
+      </trkpt>
+      <trkpt lat="41.882899" lon="-87.627705">
+        <ele>223</ele>
+        <time>2013-04-25T13:46:22Z</time>
+      </trkpt>
+    </trkseg>
+  </trk>
+</gpx>

@@ -13,7 +13,7 @@ class GPXHandler {
     maxLon = getMinOrMax("max", "lon");
   }
   
-    void parseData() {
+     void parseData() {
     int numEntries = gpxDoc.getChildCount();
     // println(numEntries);
     //    for (int i = 0; i < numEntries; i++) {

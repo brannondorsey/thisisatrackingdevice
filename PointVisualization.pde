@@ -16,9 +16,6 @@ class PointVisualization {
     cube = loadImage("cube.png");
   }
 
-  void display() {
-  }
-
   void displayStart() {
     int cubeSize = 30;
     tint(150, 150, 255);
