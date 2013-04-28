@@ -15,18 +15,22 @@ import de.fhpotsdam.utils.*;
 import de.fhpotsdam.unfolding.providers.*;
 import processing.opengl.*;
 import codeanticode.glgraphics.*;
+import java.util.Calendar;
+import java.text.ParseException;
 
 UnfoldingMap map;
 GPXHandler gpxHandler;
 PointVisualization ptVis;
 StreetView strView;
+TimeHandler timeHand;
+InfoDisplay info;
 Location[] pts;
 SimpleLinesMarker linePoints;
 String fileToParse = "mccleanblock.xml";
 color c = #3475CE;
 
 void setup() {
-  size(screen.width, screen.height, GLConstants.GLGRAPHICS);
+  size(screen.width, screen.height/2, GLConstants.GLGRAPHICS);
   smooth();
   noStroke();
   
@@ -49,12 +53,16 @@ void setup() {
   PImage[] loadingGif = Gif.getPImages(this, "loading.gif");
   strView = new StreetView(loadingGif);
   
+  info = new InfoDisplay(gpxHandler.trkpts);
+  timeHand = new TimeHandler();
+  
   linePoints.setColor(c);
   linePoints.setStrokeWeight(3);
   map.addMarkers(linePoints);
 }
 
 void draw() {
+  info.displayTimeString(mouseX, mouseY);
   map.draw();
   for(int i = 0; i < ptVis.markers.size(); i++){
     PointMarker currentMarker = ptVis.markers.get(i);

@@ -12,8 +12,8 @@ class GPXHandler {
     minLon = getMinOrMax("min", "lon");
     maxLon = getMinOrMax("max", "lon");
   }
-  
-     void parseData() {
+
+  void parseData() {
     int numEntries = gpxDoc.getChildCount();
     // println(numEntries);
     //    for (int i = 0; i < numEntries; i++) {
@@ -27,8 +27,8 @@ class GPXHandler {
     int numTrkChildren = trkseg.length;
     println("the number of trackpoints is "+trkseg.length);
     for (int i = 0; i <numTrkChildren; i++) {
-      float lat = trkseg[i].getFloat("lat");
-      float lon = trkseg[i].getFloat("lon");
+      double lat = trkseg[i].getDouble("lat");
+      double lon = trkseg[i].getDouble("lon");
 
       XMLElement trkPtTimestamp = trkseg[i].getChild(1);
       String timestamp = trkPtTimestamp.getContent();
@@ -76,4 +76,5 @@ class GPXHandler {
     return trkptsLocations;
   }
 }
+
 
