@@ -11,8 +11,9 @@ class InfoDisplay {
   void displayTimeString(int mx, int my) {
     if (checkIsNearby(mx, my)) {
       TrackPoint nearest = getNearest();
-      String time = timeHand.getTime(nearest.timestamp);
-      println("the time here was "+time);
+      String time = "";
+      if(nearest != null)time = timeHand.getTime(nearest.timestamp);
+      if(time != "") println("the time here was "+time);
       nearbyTrkpts.clear();
     }
   }
@@ -34,19 +35,24 @@ class InfoDisplay {
     ArrayList distances = new ArrayList();
     
     float minDist = 100;
-    float closest = 100;
-    //    println("the number of nearby trackpoints is "+nearbyTrkpts.size());
+    float closest = 0;
     for (int i = 0; i < nearbyTrkpts.size()-1; i++) {
-      TrackPoint trkpt1 = trkptsCopy.get(i);
-      TrackPoint trkpt2 = trkptsCopy.get(i+1);
+      TrackPoint trkpt1 = nearbyTrkpts.get(i);
+      println("the distances array is "+distances);
+      TrackPoint trkpt2 = nearbyTrkpts.get(i+1);
       float tempMin = min(trkpt1.distAway, trkpt2.distAway);
-      println("the distance away from this is "+trkpt1.distAway);
+      distances.add((float) tempMin);   
       closest = min(minDist, tempMin);
-      distances.add((float) closest);
     }
-    println(distances);
-    //int index = distances.indexOf(closest);
-    return trkptsCopy.get(1);
+
+//    println("the distances array holds "+distances.size());
+//    println("the value that it is looking for is "+closest);
+    println("closest is "+closest);
+    int index = distances.indexOf(closest);
+    println("the value of index is "+index);
+    println("the size of the distances array is "+distances.size());
+    if(distances.size() != 0) return nearbyTrkpts.get(index);
+    else return null;
   }
 }
 
