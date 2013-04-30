@@ -18,12 +18,6 @@ class InfoDisplay {
     watchImg = loadImage("watch.png");
   }
   
-//  void addStopwatch(){
-//    Trackpoint nearest = getNearest();
-//    
-//    
-//  }
-
   void displayTimeString(int mx, int my) {
     if (checkIsNearby(mx, my)) {
       cursor(watchImg);
@@ -41,6 +35,11 @@ class InfoDisplay {
     }
     if(nearby) cursor(watchImg);
     else cursor(ARROW);
+  }
+  
+  void addStopwatch(){
+    
+    
   }
   
   void displayBox(String time, TrackPoint nearest){

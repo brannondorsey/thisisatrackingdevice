@@ -73,6 +73,11 @@ void draw() {
   checkImageDisplay();
 }
 
+void mousePressed(){
+ if(info.nearby) info.addStopwatch(); 
+  
+}
+
 void checkImageDisplay(){
   for(int i = 0; i < ptVis.markers.size(); i++){
     PointMarker marker = ptVis.markers.get(i);
@@ -82,9 +87,5 @@ void checkImageDisplay(){
       strView.display(i);
     }
   }
-  
- void mousePressed(){
-   if(info.nearby) info.addStopwatch();
- }
 }
 
