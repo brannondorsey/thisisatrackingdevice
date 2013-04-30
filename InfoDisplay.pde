@@ -1,9 +1,12 @@
 class InfoDisplay {
   ArrayList<TrackPoint> trkptsCopy;
   ArrayList<TrackPoint> nearbyTrkpts;
+  ArrayList<TrackPoint> diffList; //for time difference between two points
+  PImage watchImg;
   int tSize;
-  
-
+  int opacity = 0;
+  int opacIncr = 20; //speed at which opacity increases
+  boolean nearby = false;
 
   InfoDisplay(ArrayList<TrackPoint> trkpts) {
     trkptsCopy = trkpts;
@@ -12,10 +15,18 @@ class InfoDisplay {
     textSize(tSize);
     PFont font = createFont("lato", tSize);
     textFont(font);
+    watchImg = loadImage("watch.png");
   }
+  
+//  void addStopwatch(){
+//    Trackpoint nearest = getNearest();
+//    
+//    
+//  }
 
   void displayTimeString(int mx, int my) {
     if (checkIsNearby(mx, my)) {
+      cursor(watchImg);
       TrackPoint nearest = getNearest();
       String time = "";
       if(nearest != null) time = timeHand.getTime(nearest.timestamp);
@@ -25,6 +36,11 @@ class InfoDisplay {
       }
       nearbyTrkpts.clear();
     }
+    else{
+      opacity = 0;
+    }
+    if(nearby) cursor(watchImg);
+    else cursor(ARROW);
   }
   
   void displayBox(String time, TrackPoint nearest){
@@ -32,25 +48,30 @@ class InfoDisplay {
     int offsetY = 40;
     int padding = 10;
     int awayFromPoint = 3; 
-    
-    fill(#3475CE);
+    if(opacity >= 255) opacity = 255;
+    fill(#3475CE, opacity);
     rect(nearest.pos.x + offsetX-padding, nearest.pos.y - offsetY-padding, textWidth(time)+padding*2, tSize+padding);
     beginShape();
     vertex(nearest.pos.x+offsetX-padding, nearest.pos.y - 50);
     vertex(nearest.pos.x+awayFromPoint, nearest.pos.y-awayFromPoint);
     vertex(nearest.pos.x+offsetX-padding + 50, nearest.pos.y - offsetY);
     endShape();
-    fill(255);
+    fill(255, opacity);
     text(time, nearest.pos.x+offsetX , nearest.pos.y-offsetY+padding/2+tSize/2);
+    opacity += opacIncr;
   }
 
   boolean checkIsNearby(int mx, int my) {
     int trkptReducer = 2; //reduces number of trkpts to loop through to reduce lag
     for (int i = 0; i < trkptsCopy.size(); i += trkptReducer) {
       TrackPoint t = trkptsCopy.get(i);
+      nearby = true;
       if (t.isNearby(mx, my)) nearbyTrkpts.add(t);
     }
-    if (nearbyTrkpts.size() == 0) return false;
+    if (nearbyTrkpts.size() == 0){
+      nearby = false;
+      return false;
+    }
     else return true;
   }
 
