@@ -1,7 +1,7 @@
 class TrackPoint{
  Location loc;
  String timestamp;
- int nearbyThreshold = 13;
+ int nearbyThreshold = 15;
  float distAway;
  SimplePointMarker m;
  ScreenPosition pos;
@@ -25,7 +25,6 @@ class TrackPoint{
    float distance = dist(mx, my, pos.x, pos.y);
    if (distance <= nearbyThreshold){
      distAway = distance;
-     //println("nearby this trackpoint");
      return true;
    }
    else return false; 

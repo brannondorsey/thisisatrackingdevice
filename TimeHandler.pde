@@ -15,9 +15,22 @@ class TimeHandler {
       String monthName = getMonth(monthNum);
       String dayTime = time.substring(8);
       int dayNum = int(dayTime.substring(0,2));
+      int hourNum = int(dayTime.substring(3,5));
+      String minutes = dayTime.substring(6,8);
+      println("the hour number is "+hourNum);
       time = time.substring(11, 16);
-      String period = "AM";
-      String outputTime = monthName+" "+dayNum+" "+time+" "+period;
+      String period;
+      if(hourNum >= 12){
+        hourNum -= 12;
+        if(hourNum == 0) hourNum = 1;
+        period = "PM";
+      }
+      else{
+        if(hourNum == 0) hourNum = 12;
+        period = "AM";
+      }
+      
+      String outputTime = monthName+" "+dayNum+" "+hourNum+":"+minutes+" "+period;
       return outputTime;
     }
     catch(ParseException exc) {
