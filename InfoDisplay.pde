@@ -17,12 +17,6 @@ class InfoDisplay {
     textFont(font);
     watchImg = loadImage("watch.png");
   }
-  
-//  void addStopwatch(){
-//    Trackpoint nearest = getNearest();
-//    
-//    
-//  }
 
   void displayTimeString(int mx, int my) {
     if (checkIsNearby(mx, my)) {

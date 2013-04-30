@@ -82,9 +82,5 @@ void checkImageDisplay(){
       strView.display(i);
     }
   }
-  
- void mousePressed(){
-   if(info.nearby) info.addStopwatch();
- }
 }
 
