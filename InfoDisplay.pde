@@ -8,6 +8,11 @@ class InfoDisplay {
   int opacity = 0;
   int opacIncr = 20; //speed at which opacity increases
   
+  int offsetX;
+  int offsetY = 40;
+  int padding = 10;
+  int awayFromPoint = 3;
+  
   InfoDisplay(ArrayList<TrackPoint> trkpts) {
     trkptsCopy = trkpts;
     nearbyTrkpts = new ArrayList<TrackPoint>();
@@ -27,7 +32,7 @@ class InfoDisplay {
       String time = "";
       if (nearest != null) time = timeHand.getTime(nearest.timestamp);
       if (time != "") {
-        displayBox(time, nearest);
+        timeBox(time, nearest);
       }
       nearbyTrkpts.clear();
     }
@@ -61,27 +66,40 @@ class InfoDisplay {
       if(diffList.size() == 2){
        TrackPoint waypoint1 = diffList.get(0);
        TrackPoint waypoint2 = diffList.get(1);
+       TrackPoint waypoint = (waypoint1.id > waypoint2.id) ? waypoint1 : waypoint2;
        diffString = timeHand.getDiffString(waypoint1.timestamp, waypoint2.timestamp);
-       displayBox(diffString, waypoint2);
+       diffBox(diffString, waypoint);
       }
   }
 
-  void displayBox(String time, TrackPoint nearest) {
-    int offsetX = 20;
-    int offsetY = 40;
-    int padding = 10;
-    int awayFromPoint = 3; 
+  //box to show time of trackpoint
+  void timeBox(String time, TrackPoint nearest) {
     if (opacity >= 255) opacity = 255;
-    fill(#3475CE); //add opacity here
+    offsetX = 20; 
+    fill(#3475CE, opacity);
     rect(nearest.pos.x + offsetX-padding, nearest.pos.y - offsetY-padding, textWidth(time)+padding*2, tSize+padding);
     beginShape();
     vertex(nearest.pos.x+offsetX-padding, nearest.pos.y - 50);
-    vertex(nearest.pos.x+awayFromPoint, nearest.pos.y-awayFromPoint);
+    vertex(nearest.pos.x+awayFromPoint, nearest.pos.y-awayFromPoint); //center point
     vertex(nearest.pos.x+offsetX-padding + 50, nearest.pos.y - offsetY);
     endShape();
-    fill(255); //add opacity here
+    fill(255, opacity);
     text(time, nearest.pos.x+offsetX, nearest.pos.y-offsetY+padding/2+tSize/2);
     opacity += opacIncr;
+  }
+  
+  //box to show time differance between two trackpoints
+  void diffBox(String timeDiff, TrackPoint furtherTrkpt){
+    fill(#4f4f4f);
+    offsetX = 40;
+    rect(furtherTrkpt.pos.x - offsetX - textWidth(timeDiff) - padding, furtherTrkpt.pos.y - offsetY-padding, textWidth(timeDiff)+padding*2, tSize+padding);
+    beginShape();
+    vertex(furtherTrkpt.pos.x-offsetX+padding, furtherTrkpt.pos.y - 50);
+    vertex(furtherTrkpt.pos.x-awayFromPoint, furtherTrkpt.pos.y-awayFromPoint); //center point
+    vertex(furtherTrkpt.pos.x-offsetX, furtherTrkpt.pos.y - offsetY + padding*2);
+    endShape();
+    fill(255);
+    text(timeDiff, furtherTrkpt.pos.x - textWidth(timeDiff) - offsetX, furtherTrkpt.pos.y-offsetY+padding/2+tSize/2);
   }
 
   boolean checkIsNearby(int mx, int my) {
