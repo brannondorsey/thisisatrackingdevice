@@ -5,8 +5,10 @@ class TrackPoint{
  float distAway;
  SimplePointMarker m;
  ScreenPosition pos;
+ int id;
  
- TrackPoint(double _lat, double _lon, String _timestamp){
+ TrackPoint(int _id, double _lat, double _lon, String _timestamp){
+  id = _id;
   loc = new Location(_lat, _lon);
   timestamp = _timestamp;
   m = new SimplePointMarker(loc);

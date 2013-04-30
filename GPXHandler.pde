@@ -32,7 +32,7 @@ class GPXHandler {
 
       XMLElement trkPtTimestamp = trkseg[i].getChild(1);
       String timestamp = trkPtTimestamp.getContent();
-      trkpts.add(new TrackPoint(lat, lon, timestamp));
+      trkpts.add(new TrackPoint(i, lat, lon, timestamp));
     }
   }
 

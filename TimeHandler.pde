@@ -89,12 +89,11 @@ class TimeHandler {
       minuteText = (timeDifMinutes == 1) ? " minute":" minutes"; 
       displayTime.add(" "+timeDifMinutes+minuteText);
     }
-    println("displayTime.size() is "+displayTime.size());
     for (int j = 0; j < displayTime.size(); j++) {
       String field = displayTime.get(j);
       display+=field;
     }
-    if (display.length() == 0) display = "less than a second";
+    if (display.length() == 0) display = "less than a minute";
     else display = display.substring(1); //removes whitespace character at the beginning 
     return display;
   }

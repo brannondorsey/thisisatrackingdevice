@@ -3,6 +3,7 @@ class InfoDisplay {
   ArrayList<TrackPoint> nearbyTrkpts;
   ArrayList<TrackPoint> diffList; //for time difference between two points
   PImage watchImg;
+  PImage waypointImg;
   int tSize;
   int opacity = 0;
   int opacIncr = 20; //speed at which opacity increases
@@ -16,6 +17,7 @@ class InfoDisplay {
     PFont font = createFont("lato", tSize);
     textFont(font);
     watchImg = loadImage("watch.png");
+    waypointImg = loadImage("waypoint.png");
   }
 
   void displayTimeString(int mx, int my) {
@@ -32,7 +34,7 @@ class InfoDisplay {
     else {
       opacity = 0;
     }
-    if (nearby) cursor(watchImg);
+    if (checkIsNearby(mouseX, mouseY)) cursor(watchImg);
     else cursor(ARROW);
   }
 
@@ -49,9 +51,18 @@ class InfoDisplay {
         TrackPoint t = null;
         t = diffList.get(i);
         fill(0);
-        rectMode(CENTER);
-        if (t != null) rect(t.pos.x, t.pos.y, 20, 20);
-        rectMode(CORNER);
+        float aspectRat = waypointImg.width/waypointImg.height;
+        int imgS = 10;
+        imageMode(CENTER);
+        if (t != null) image(waypointImg, t.pos.x, t.pos.y-waypointImg.height/2);
+        imageMode(CORNER);
+      }
+      String diffString;
+      if(diffList.size() == 2){
+       TrackPoint waypoint1 = diffList.get(0);
+       TrackPoint waypoint2 = diffList.get(1);
+       diffString = timeHand.getDiffString(waypoint1.timestamp, waypoint2.timestamp);
+       displayBox(diffString, waypoint2);
       }
   }
 
@@ -61,14 +72,14 @@ class InfoDisplay {
     int padding = 10;
     int awayFromPoint = 3; 
     if (opacity >= 255) opacity = 255;
-    fill(#3475CE, opacity);
+    fill(#3475CE); //add opacity here
     rect(nearest.pos.x + offsetX-padding, nearest.pos.y - offsetY-padding, textWidth(time)+padding*2, tSize+padding);
     beginShape();
     vertex(nearest.pos.x+offsetX-padding, nearest.pos.y - 50);
     vertex(nearest.pos.x+awayFromPoint, nearest.pos.y-awayFromPoint);
     vertex(nearest.pos.x+offsetX-padding + 50, nearest.pos.y - offsetY);
     endShape();
-    fill(255, opacity);
+    fill(255); //add opacity here
     text(time, nearest.pos.x+offsetX, nearest.pos.y-offsetY+padding/2+tSize/2);
     opacity += opacIncr;
   }
@@ -86,7 +97,6 @@ class InfoDisplay {
   //calculate minimum of all nearby trkpts
   TrackPoint getNearest() {
     ArrayList distances = new ArrayList();
-
     float minDist = 100;
     float closest = 0;
     for (int i = 0; i < nearbyTrkpts.size()-1; i++) {
