@@ -6,8 +6,7 @@ class InfoDisplay {
   int tSize;
   int opacity = 0;
   int opacIncr = 20; //speed at which opacity increases
-  boolean nearby = false;
-
+  
   InfoDisplay(ArrayList<TrackPoint> trkpts) {
     trkptsCopy = trkpts;
     nearbyTrkpts = new ArrayList<TrackPoint>();
@@ -41,13 +40,11 @@ class InfoDisplay {
     if (diffList.size() == 2) diffList.clear();
     if (diffList.size() < 2) {
       TrackPoint n = getNearest();
-      println("here and n is "+n);
       if (n != null) diffList.add(n);
     }
   }
 
   void displayStopwatches() {
-    if (checkIsNearby(mouseX, mouseY)) {
       for (int i = 0; i < diffList.size(); i++) {
         TrackPoint t = null;
         t = diffList.get(i);
@@ -56,7 +53,6 @@ class InfoDisplay {
         if (t != null) rect(t.pos.x, t.pos.y, 20, 20);
         rectMode(CORNER);
       }
-    }
   }
 
   void displayBox(String time, TrackPoint nearest) {
@@ -81,13 +77,9 @@ class InfoDisplay {
     int trkptReducer = 2; //reduces number of trkpts to loop through to reduce lag
     for (int i = 0; i < trkptsCopy.size(); i += trkptReducer) {
       TrackPoint t = trkptsCopy.get(i);
-      nearby = true;
       if (t.isNearby(mx, my)) nearbyTrkpts.add(t);
     }
-    if (nearbyTrkpts.size() == 0) {
-      nearby = false;
-      return false;
-    }
+    if (nearbyTrkpts.size() == 0) return false;
     else return true;
   }
 

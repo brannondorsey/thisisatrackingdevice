@@ -75,7 +75,7 @@ void draw() {
 }
 
 void mousePressed(){
- if(info.nearby) info.addStopwatch(); 
+ if(info.checkIsNearby(mouseX, mouseY)) info.addStopwatch(); 
  else info.diffList.clear();
 }
 
