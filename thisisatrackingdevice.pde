@@ -30,7 +30,7 @@ String fileToParse = "mccleanblock.xml";
 color c = #3475CE;
 
 void setup() {
-  size(screen.width, screen.height/2, GLConstants.GLGRAPHICS);
+  size(screen.width, screen.height, GLConstants.GLGRAPHICS);
   smooth();
   noStroke();
   
@@ -62,7 +62,6 @@ void setup() {
 }
 
 void draw() {
-  info.displayTimeString(mouseX, mouseY);
   map.draw();
   for(int i = 0; i < ptVis.markers.size(); i++){
     PointMarker currentMarker = ptVis.markers.get(i);
@@ -70,6 +69,7 @@ void draw() {
     currentMarker.display();
   }
   ptVis.displayStart();
+  info.displayTimeString(mouseX, mouseY);
   checkImageDisplay();
 }
 

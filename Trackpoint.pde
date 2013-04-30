@@ -1,7 +1,7 @@
 class TrackPoint{
  Location loc;
  String timestamp;
- int nearbyThreshold = 10;
+ int nearbyThreshold = 13;
  float distAway;
  SimplePointMarker m;
  ScreenPosition pos;
