@@ -17,7 +17,6 @@ class TimeHandler {
       int dayNum = int(dayTime.substring(0,2));
       int hourNum = int(dayTime.substring(3,5));
       String minutes = dayTime.substring(6,8);
-      println("the hour number is "+hourNum);
       time = time.substring(11, 16);
       String period;
       if(hourNum >= 12){
