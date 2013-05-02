@@ -5,11 +5,14 @@ class TrackPoint{
  float distAway;
  SimplePointMarker m;
  ScreenPosition pos;
+ int id;
  
- TrackPoint(double _lat, double _lon, String _timestamp){
+ TrackPoint(int _id, double _lat, double _lon, String _timestamp){
+  id = _id;
   loc = new Location(_lat, _lon);
   timestamp = _timestamp;
   m = new SimplePointMarker(loc);
+  pos = m.getScreenPosition(map);
  }
  
  float getLat(){
@@ -18,6 +21,11 @@ class TrackPoint{
  
  float getLon(){
    return loc.getLon();
+ }
+ 
+ void updatePos(){
+   println("got here");
+   pos = m.getScreenPosition(map);
  }
  
  boolean isNearby(int mx, int my){

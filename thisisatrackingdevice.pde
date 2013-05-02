@@ -70,7 +70,12 @@ void draw() {
   }
   ptVis.displayStart();
   info.displayTimeString(mouseX, mouseY);
+  info.displayStopwatches();
   checkImageDisplay();
+}
+
+void mousePressed(){
+ if(info.checkIsNearby(mouseX, mouseY)) info.addStopwatch(); 
 }
 
 void checkImageDisplay(){

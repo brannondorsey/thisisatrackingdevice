@@ -26,7 +26,6 @@ class StreetView {
       float lat = marker.loc.getLat();
       float lon = marker.loc.getLon();
       float angle = int(marker.angle);
-      println("lat is "+lat);
       PImage currentImg = loadImage("http://maps.googleapis.com/maps/api/streetview?size="+imgWidth+"x"+imgHeight+"&location="+lat+",%20"+lon+"&fov=120&heading="+angle+"&pitch=00&sensor=false&sensor=false.png");
       currentImg.resize(int(wide), int(tall));
       imgs[i] = currentImg;
