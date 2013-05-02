@@ -30,7 +30,7 @@ String fileToParse = "mccleanblock.xml";
 color c = #3475CE;
 
 void setup() {
-  size(screen.width, screen.height/2, GLConstants.GLGRAPHICS);
+  size(screen.width, screen.height, GLConstants.GLGRAPHICS);
   smooth();
   noStroke();
   
@@ -76,7 +76,6 @@ void draw() {
 
 void mousePressed(){
  if(info.checkIsNearby(mouseX, mouseY)) info.addStopwatch(); 
- else info.diffList.clear();
 }
 
 void checkImageDisplay(){

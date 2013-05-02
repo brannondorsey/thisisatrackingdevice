@@ -3,6 +3,7 @@ class InfoDisplay {
   ArrayList<TrackPoint> nearbyTrkpts;
   ArrayList<TrackPoint> diffList; //for time difference between two points
   ArrayList<Location> locsBtwn;
+  color secondary;
   PImage watchImg;
   PImage waypointImg;
   int tSize;
@@ -26,6 +27,7 @@ class InfoDisplay {
     textFont(font);
     watchImg = loadImage("watch.png");
     waypointImg = loadImage("waypoint.png");
+    secondary = color(#4f4f4f);
   }
 
   void displayTimeString(int mx, int my) {
@@ -101,7 +103,7 @@ class InfoDisplay {
       locsBtwn.add(t.loc);
     }
     SimpleLinesMarker linePtsBtwn = new SimpleLinesMarker(locsBtwn);
-    linePtsBtwn.setColor(#4f4f4f);
+    linePtsBtwn.setColor(secondary);
     linePtsBtwn.setStrokeWeight(4);
     
     map.addMarkers(linePtsBtwn);
@@ -111,7 +113,7 @@ class InfoDisplay {
   void timeBox(String time, TrackPoint nearest) {
     if (opacity >= 255) opacity = 255;
     offsetX = 20; 
-    fill(#3475CE, opacity);
+    fill(c, opacity);
     rect(nearest.pos.x + offsetX-padding, nearest.pos.y - offsetY-padding, textWidth(time)+padding*2, tSize+padding);
     beginShape();
     vertex(nearest.pos.x+offsetX-padding, nearest.pos.y - 50);
@@ -125,7 +127,7 @@ class InfoDisplay {
 
   //box to show time differance between two trackpoints
   void diffBox(String timeDiff, TrackPoint furtherTrkpt) {
-    fill(#4f4f4f);
+    fill(secondary);
     offsetX = 40;
     rect(furtherTrkpt.pos.x - offsetX - textWidth(timeDiff) - padding, furtherTrkpt.pos.y - offsetY-padding, textWidth(timeDiff)+padding*2, tSize+padding);
     beginShape();
