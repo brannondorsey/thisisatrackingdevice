@@ -26,6 +26,13 @@ class PointVisualization {
     //image(cube, startPos.x-(cubeSize/2), startPos.y-(cubeSize/2), cubeSize, cubeSize);
     tint(255, 255, 255);
   }
+  
+   void resetColors(){
+    for(int i = 0; i < markers.size(); i++){
+      PointMarker m = markers.get(i);
+      m.markerImg = m.marker1;
+    }
+  }
 
   void createMarker() {
     markers.add(new PointMarker(markerIndex, currentLocation, nextLocation));

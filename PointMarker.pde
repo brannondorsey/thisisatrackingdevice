@@ -5,12 +5,15 @@ class PointMarker {
   ScreenPosition pos;
   SimplePointMarker m;
   PImage markerImg;
+  PImage marker1;
+  PImage marker2;
   int s;
   int minS = 15;
   int maxS = 30;
   int growDistance = 100; 
   float angle;
   int index;
+  boolean firstMarker;
 
   PointMarker(int _index, Location _loc, Location _nextLoc) {
     loc = _loc;
@@ -21,30 +24,38 @@ class PointMarker {
     pos = m.getScreenPosition(map);
     SimplePointMarker n = new SimplePointMarker(nextLoc);
     ScreenPosition nextPos = n.getScreenPosition(map);
-    markerImg = loadImage("marker.png");
+    marker1 = loadImage("marker.png");
+    marker2 = loadImage("marker2.png");
+    firstMarker = true;
+    markerImg = marker1;
     angle =  degrees((float) GeoUtils.getAngleBetween(loc, nextLoc));
     //println("the current location is "+loc.getLat()+", "+loc.getLon()+". the next location is "+nextLoc.getLat()+", "+nextLoc.getLon()+".");
   }
-  
+
   //updates screen positions
-  void update(){
+  void update() {
     pos = m.getScreenPosition(map);
   }
 
+  void changeColor() { 
+    markerImg = marker2;
+  }
+
   void display() {
+    println(info.secondary);
+    println(c);
     float distFromMarker = dist(mouseX, mouseY, pos.x, pos.y);
     float distM = constrain(distFromMarker, 0, growDistance);
     s = int(map(distM, 0, growDistance, maxS, minS));
-   
+
     //s = 15;
-    fill(#3475CE);
     SimplePointMarker m = new SimplePointMarker(loc);
     ScreenPosition pos =  m.getScreenPosition(map);
 
     pushMatrix();
     translate(pos.x, pos.y);
     rotate(radians(angle));
-    image(markerImg, -s/2, -s/2 , s, s);
+    image(markerImg, -s/2, -s/2, s, s);
     popMatrix();
   }
 

@@ -68,7 +68,6 @@ void draw() {
     currentMarker.update();
     currentMarker.display();
   }
-  ptVis.displayStart();
   info.displayTimeString(mouseX, mouseY);
   info.displayStopwatches();
   checkImageDisplay();

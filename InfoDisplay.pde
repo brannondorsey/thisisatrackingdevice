@@ -50,6 +50,7 @@ class InfoDisplay {
     if (diffList.size() == 2){
       locsBtwn.clear();
       diffList.clear();
+      ptVis.resetColors();
     }
     if (diffList.size() < 2) {
       TrackPoint n = getNearest();
@@ -100,6 +101,11 @@ class InfoDisplay {
    // println("the number of trkpts between these two waypoints is "+numPointsBetween);
     for(int i = earlierTrkpt.id; i <= laterTrkpt.id; i++){
       TrackPoint t = trkptsCopy.get(i);
+      for(int j = 0; j < ptVis.markers.size(); j++){
+        PointMarker p = ptVis.markers.get(j);
+        if(p.loc.x == t.loc.x &&
+           p.loc.y == t.loc.y) p.changeColor();
+      }
       locsBtwn.add(t.loc);
     }
     SimpleLinesMarker linePtsBtwn = new SimpleLinesMarker(locsBtwn);
