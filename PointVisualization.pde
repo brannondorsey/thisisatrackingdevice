@@ -7,7 +7,8 @@ class PointVisualization {
   Location nextLocation;
   float pointFrequency = 60;
   PImage cube;
-  int markerIndex = 0;
+  int markerIndex;
+  int prevIndex = 1;
 
   PointVisualization(ArrayList<TrackPoint> _trkptsCopy) {
     //geo = new GeoUtils();
@@ -46,7 +47,7 @@ class PointVisualization {
   }
 
   void testScreenpos() {
-    int index = getIndexOf(currentLocation); //this might not work because it is querying the arraylist of TrackPoints for a Location that a trackpoint will contain
+    int index = getIndexOf(currentLocation);
     if (index < trkptsCopy.size()) {
       SimplePointMarker tempMarker = new SimplePointMarker(currentLocation);
       ScreenPosition currentScreenpos = tempMarker.getScreenPosition(map);
@@ -66,7 +67,10 @@ class PointVisualization {
         }
         else continue;
       }
-      if (index < 150) testScreenpos(); //1500 or 150
+      println("trackpoints size is"+trkptsCopy.size());
+      println("the index is "+index);
+      if (index < 183 && index != prevIndex) testScreenpos(); //1500 or 150
+      prevIndex = index;
     }
   }
   

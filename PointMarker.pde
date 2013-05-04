@@ -42,8 +42,6 @@ class PointMarker {
   }
 
   void display() {
-    println(info.secondary);
-    println(c);
     float distFromMarker = dist(mouseX, mouseY, pos.x, pos.y);
     float distM = constrain(distFromMarker, 0, growDistance);
     s = int(map(distM, 0, growDistance, maxS, minS));

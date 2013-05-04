@@ -30,7 +30,7 @@ String fileToParse = "mccleanblock.xml";
 color c = #3475CE;
 
 void setup() {
-  size(screen.width, screen.height, GLConstants.GLGRAPHICS);
+  size(screen.width, screen.height/2, GLConstants.GLGRAPHICS);
   smooth();
   noStroke();
   
