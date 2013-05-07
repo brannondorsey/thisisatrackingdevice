@@ -83,8 +83,8 @@ void draw() {
 }
 
 void mousePressed(){
- if(info.checkIsNearby(mouseX, mouseY)) info.addStopwatch(); 
- if(contains(overMarkers)) strView.displaying = true;
+ if(info.checkIsNearby(mouseX, mouseY) && !contains(overMarkers)) info.addStopwatch(); 
+ if(contains(overMarkers) && !strView.displaying) strView.displaying = true;
  else strView.displaying = false;
 }
 

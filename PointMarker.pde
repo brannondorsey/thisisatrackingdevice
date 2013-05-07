@@ -44,7 +44,6 @@ class PointMarker {
   //updates screen positions
   void update() {
     pos = m.getScreenPosition(map);
-    println("the zoom is "+map.getZoomLevel());
     if(map.getZoomLevel() >= maxZoom-1){
       s = oS*1.5;
       maxS = oMaxS*1.5;
