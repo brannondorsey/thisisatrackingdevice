@@ -26,17 +26,20 @@ TimeHandler timeHand;
 InfoDisplay info;
 Location[] pts;
 SimpleLinesMarker linePoints;
+int maxZoom;
+int zoom;
 boolean[] overMarkers;
 String fileToParse = "chicago_tour.gpx";
 color c = #3475CE;
 
 void setup() {
-  size(screen.width, screen.height/2, GLConstants.GLGRAPHICS);
+  size(screen.width, screen.height, GLConstants.GLGRAPHICS);
   smooth();
   noStroke();
   
   int maxPanningDistance = 10; // in km
-  int zoom = 14; //13 or 14 or 17
+  zoom = 14; //13 or 14 or 17
+  maxZoom = 18;
 
   map = new UnfoldingMap(this, new OpenStreetMap.CloudmadeProvider("038dee0bec3441f495c0dee8b72467fd", 93093));
   MapUtils.createDefaultEventDispatcher(this, map);
@@ -47,7 +50,7 @@ void setup() {
   Location cent = gpxHandler.getCenter();
   map.zoomAndPanTo(cent, zoom);
   map.setPanningRestriction(cent, maxPanningDistance);
-  map.setZoomRange(zoom-1, 18);
+  map.setZoomRange(zoom-1, maxZoom);
   
   linePoints = new SimpleLinesMarker(gpxHandler.getLocations()); 
   ptVis.createMarkers();
@@ -62,6 +65,8 @@ void setup() {
 }
 
 void draw() {
+  if(strView.displaying) map.setZoomRange(map.getZoomLevel(), map.getZoomLevel());
+  else map.setZoomRange(zoom-1, maxZoom);
   map.draw();
   for(int i = 0; i < ptVis.markers.size(); i++){
     PointMarker currentMarker = ptVis.markers.get(i);

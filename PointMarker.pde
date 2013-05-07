@@ -7,9 +7,12 @@ class PointMarker {
   PImage markerImg;
   PImage marker1;
   PImage marker2;
-  int s;
-  int minS = 15;
-  int maxS = 30;
+  int oS; //original s
+  int oMinS; //original minS
+  int oMaxS; //original maxS
+  float s;
+  float minS;
+  float maxS;
   int growDistance = 100; 
   float angle;
   int index;
@@ -20,7 +23,12 @@ class PointMarker {
     nextLoc = _nextLoc;
     index = _index;
     println("this markers index is "+index);
-    s = 15;
+    oS = 15;
+    oMaxS = 30;
+    oMinS = 15;
+    s = oS;
+    maxS = oMaxS;
+    minS = oMinS;
     m = new SimplePointMarker(loc);
     pos = m.getScreenPosition(map);
     SimplePointMarker n = new SimplePointMarker(nextLoc);
@@ -36,6 +44,18 @@ class PointMarker {
   //updates screen positions
   void update() {
     pos = m.getScreenPosition(map);
+    println("the zoom is "+map.getZoomLevel());
+    if(map.getZoomLevel() >= maxZoom-1){
+      s = oS*1.5;
+      maxS = oMaxS*1.5;
+      minS = oMinS*1.5;
+    }
+    else{
+      s = oS;
+      maxS = oMaxS;
+      minS = oMinS;
+    }
+    
   }
 
   void changeColor() { 
