@@ -19,6 +19,7 @@ class PointMarker {
     loc = _loc;
     nextLoc = _nextLoc;
     index = _index;
+    println("this markers index is "+index);
     s = 15;
     m = new SimplePointMarker(loc);
     pos = m.getScreenPosition(map);

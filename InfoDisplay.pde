@@ -32,7 +32,6 @@ class InfoDisplay {
 
   void displayTimeString(int mx, int my) {
     if (checkIsNearby(mx, my)) {
-      cursor(watchImg);
       TrackPoint nearest = getNearest();
       String time = "";
       if (nearest != null) time = timeHand.getTime(nearest.timestamp);
@@ -42,8 +41,6 @@ class InfoDisplay {
     else {
       opacity = 0;
     }
-    if (checkIsNearby(mouseX, mouseY)) cursor(watchImg);
-    else cursor(ARROW);
   }
 
   void addStopwatch() {
@@ -119,14 +116,14 @@ class InfoDisplay {
   void timeBox(String time, TrackPoint nearest) {
     if (opacity >= 255) opacity = 255;
     offsetX = 20; 
-    fill(c, opacity);
+    fill(c); //fill(c, opacity)
     rect(nearest.pos.x + offsetX-padding, nearest.pos.y - offsetY-padding, textWidth(time)+padding*2, tSize+padding);
     beginShape();
     vertex(nearest.pos.x+offsetX-padding, nearest.pos.y - 50);
     vertex(nearest.pos.x+awayFromPoint, nearest.pos.y-awayFromPoint); //center point
     vertex(nearest.pos.x+offsetX-padding + 50, nearest.pos.y - offsetY);
     endShape();
-    fill(255, opacity);
+    fill(255); // fill(255, opacity);
     text(time, nearest.pos.x+offsetX, nearest.pos.y-offsetY+padding/2+tSize/2);
     opacity += opacIncr;
   }

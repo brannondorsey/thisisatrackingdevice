@@ -26,6 +26,7 @@ TimeHandler timeHand;
 InfoDisplay info;
 Location[] pts;
 SimpleLinesMarker linePoints;
+boolean[] overMarkers;
 String fileToParse = "chicago_tour.gpx";
 color c = #3475CE;
 
@@ -51,9 +52,9 @@ void setup() {
   linePoints = new SimpleLinesMarker(gpxHandler.getLocations()); 
   ptVis.createMarkers();
   strView = new StreetView();
-  
   info = new InfoDisplay(gpxHandler.trkpts);
   timeHand = new TimeHandler();
+  overMarkers = new boolean[ptVis.markers.size()];
   
   linePoints.setColor(c);
   linePoints.setStrokeWeight(3);
@@ -66,23 +67,41 @@ void draw() {
     PointMarker currentMarker = ptVis.markers.get(i);
     currentMarker.update();
     currentMarker.display();
+    if(currentMarker.isOver(mouseX, mouseY)) overMarkers[currentMarker.index] = true;
+    else overMarkers[currentMarker.index] = false;
+    if(!strView.displaying) checkImgNeedsChange(i);
   }
   info.displayTimeString(mouseX, mouseY);
   info.displayStopwatches();
-  checkImageDisplay();
+  if(strView.displaying) strView.display();
+  setMouse();
 }
 
 void mousePressed(){
  if(info.checkIsNearby(mouseX, mouseY)) info.addStopwatch(); 
+ if(contains(overMarkers)) strView.displaying = true;
+ else strView.displaying = false;
 }
 
-void checkImageDisplay(){
-  for(int i = 0; i < ptVis.markers.size(); i++){
+void setMouse(){
+ if(contains(overMarkers)) cursor(HAND);
+ else if(strView.displaying) cursor(HAND);
+ else if(info.checkIsNearby(mouseX, mouseY)) cursor(info.watchImg);
+ else cursor(ARROW);
+}
+
+boolean contains(boolean[] values){
+  for(int i = 0; i<values.length; i++){
+    if(values[i] == true) return true;
+  }
+  return false;
+}
+
+void checkImgNeedsChange(int i){
     PointMarker marker = ptVis.markers.get(i);
     int offset = int(marker.s/2);
     if(marker.isOver(mouseX, mouseY)){ 
-      strView.display(i);
+      strView.updateImage(i);
     }
-  }
 }
 

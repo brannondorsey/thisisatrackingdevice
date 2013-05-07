@@ -3,12 +3,14 @@ class StreetView {
   PImage[] imgs;
   PGraphics[] pgs;
   PImage currentImg;
+  PImage pgToDisplay;
   int imgHeight = 400; 
   int imgWidth = 640;
   int gifFrame = 0;
   float wide;
   float tall;
   float aspectRatio;
+  boolean displaying = false;
 
   StreetView() {
     aspectRatio = imgWidth/imgHeight;
@@ -27,10 +29,15 @@ class StreetView {
       imgs[i] = currentImg;
       stylePgs(i, imgs[i]);
     }
+    pgToDisplay = pgs[0];
   } 
 
-  void display(int markerIndex) {
-    image(pgs[markerIndex], 0, screen.height-tall, wide, tall);
+  void display() {
+    image(pgToDisplay, 0, screen.height-tall, wide, tall);
+  }
+  
+  void updateImage(int i){
+    pgToDisplay = pgs[i];
   }
 
   void stylePgs(int i, PImage img) {
