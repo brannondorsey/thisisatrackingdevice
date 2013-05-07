@@ -66,7 +66,7 @@ class PointVisualization {
         }
         else continue;
       }
-      if (index < 150) testScreenpos(); //1500 or 150
+      if (index < 1500) testScreenpos(); //1500 or 150 or 45
     }
   }
   

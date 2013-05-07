@@ -29,11 +29,20 @@ class GPXHandler {
     for (int i = 0; i <numTrkChildren; i++) {
       double lat = trkseg[i].getDouble("lat");
       double lon = trkseg[i].getDouble("lon");
-
-      XMLElement trkPtTimestamp = trkseg[i].getChild(1);
+      int timeIndex = getIndex(trkseg[i], "time");
+      XMLElement trkPtTimestamp = trkseg[i].getChild(timeIndex); //1
       String timestamp = trkPtTimestamp.getContent();
       trkpts.add(new TrackPoint(i, lat, lon, timestamp));
     }
+  }
+  
+  //returns the index of desired node
+  int getIndex(XMLElement parent, String nodeName){
+    for(int i = 0; i<parent.getChildCount(); i++){
+      if(parent.getChild(i).getName().equals(nodeName)) return i;
+      //println(parent.getChild(i).getString(nodeName));
+    }
+    return -1;
   }
 
   //finds location of desired node in gpxDoc

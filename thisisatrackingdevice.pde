@@ -26,16 +26,16 @@ TimeHandler timeHand;
 InfoDisplay info;
 Location[] pts;
 SimpleLinesMarker linePoints;
-String fileToParse = "mccleanblock.xml";
+String fileToParse = "marathon.xml";
 color c = #3475CE;
 
 void setup() {
-  size(screen.width, screen.height, GLConstants.GLGRAPHICS);
+  size(screen.width, screen.height/2, GLConstants.GLGRAPHICS);
   smooth();
   noStroke();
   
   int maxPanningDistance = 10; // in km
-  int zoom = 17; //13 or 17
+  int zoom = 13; //13 or 14 or 17
 
   map = new UnfoldingMap(this, new OpenStreetMap.CloudmadeProvider("038dee0bec3441f495c0dee8b72467fd", 93093));
   MapUtils.createDefaultEventDispatcher(this, map);
