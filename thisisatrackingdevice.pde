@@ -33,12 +33,12 @@ String fileToParse = "chicago_tour.gpx";
 color c = #3475CE;
 
 void setup() {
-  size(screen.width, screen.height, GLConstants.GLGRAPHICS);
+  size(screen.width, screen.height*4/5, GLConstants.GLGRAPHICS);
   smooth();
   noStroke();
   
   int maxPanningDistance = 10; // in km
-  zoom = 14; //13 or 14 or 17
+  zoom = 15; //13 or 14 or 17
   maxZoom = 18;
 
   map = new UnfoldingMap(this, new OpenStreetMap.CloudmadeProvider("038dee0bec3441f495c0dee8b72467fd", 93093));

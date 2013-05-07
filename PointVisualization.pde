@@ -5,7 +5,7 @@ class PointVisualization {
   ArrayList<TrackPoint> trkptsCopy;
   Location currentLocation;
   Location nextLocation;
-  float pointFrequency = 30;
+  float pointFrequency = 60;
   PImage cube;
   int markerIndex = 0;
 
