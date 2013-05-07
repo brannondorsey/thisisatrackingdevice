@@ -5,7 +5,7 @@ class PointVisualization {
   ArrayList<TrackPoint> trkptsCopy;
   Location currentLocation;
   Location nextLocation;
-  float pointFrequency = 60;
+  float pointFrequency = 30;
   PImage cube;
   int markerIndex = 0;
 
@@ -66,7 +66,7 @@ class PointVisualization {
         }
         else continue;
       }
-      if (index < 1500) testScreenpos(); //1500 or 150 or 45
+      if (index < 247) testScreenpos(); //1500 or 150 or 45
     }
   }
   

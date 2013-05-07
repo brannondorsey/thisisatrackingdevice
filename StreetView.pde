@@ -3,8 +3,6 @@ class StreetView {
   PImage[] imgs;
   PGraphics[] pgs;
   PImage currentImg;
-  PImage[] loadingGif;
-  PImage currentLoading;
   int imgHeight = 400; 
   int imgWidth = 640;
   int gifFrame = 0;
@@ -12,21 +10,19 @@ class StreetView {
   float tall;
   float aspectRatio;
 
-  StreetView(PImage[] _loadingGif) {
-    loadingGif = _loadingGif;
+  StreetView() {
     aspectRatio = imgWidth/imgHeight;
     wide = screen.width;
     tall = screen.height;//wide/aspectRatio;
     imgs = new PImage[ptVis.markers.size()];
     pgs = new PGraphics[imgs.length];
-    currentLoading = loadingGif[0];
-    gifFrame = 0;
     for (int i = 0; i < imgs.length; i++) {
       PointMarker marker = ptVis.markers.get(i);
       float lat = marker.loc.getLat();
       float lon = marker.loc.getLon();
       float angle = int(marker.angle);
       PImage currentImg = loadImage("http://maps.googleapis.com/maps/api/streetview?size="+imgWidth+"x"+imgHeight+"&location="+lat+",%20"+lon+"&fov=120&heading="+angle+"&pitch=00&sensor=false&sensor=false.png");
+      println("loaded image number "+i);
       currentImg.resize(int(wide), int(tall));
       imgs[i] = currentImg;
       stylePgs(i, imgs[i]);
@@ -35,17 +31,6 @@ class StreetView {
 
   void display(int markerIndex) {
     image(pgs[markerIndex], 0, screen.height-tall, wide, tall);
-  }
-
-  void loading() {
-    if(frameCount % 5 == 0){
-      gifFrame++;
-      if(gifFrame == 12) gifFrame = 0;
-    }
-    currentLoading = loadingGif[gifFrame];
-    imageMode(CENTER);
-    image(currentLoading, width/2, height/2);
-    imageMode(CORNER);
   }
 
   void stylePgs(int i, PImage img) {
