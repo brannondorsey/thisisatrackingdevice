@@ -14,16 +14,16 @@ class StreetView {
     wide = screen.width;
     tall = screen.height; 
     imgs = new PImage[ptVis.markers.size()];
-    for (int i = 0; i < imgs.length; i++) {
-      PointMarker marker = ptVis.markers.get(i);
-      float lat = marker.loc.getLat();
-      float lon = marker.loc.getLon();
-      float angle = int(marker.angle);
-      PImage currentImg = loadImage("http://maps.googleapis.com/maps/api/streetview?size="+imgWidth+"x"+imgHeight+"&location="+lat+",%20"+lon+"&fov=120&heading="+angle+"&pitch=00&sensor=false&sensor=false.png");
-      println("loaded image number "+i);
-      currentImg.resize(int(wide), int(tall));
-      stylePgs(i, currentImg);
-    }
+//    for (int i = 0; i < imgs.length; i++) {
+//      PointMarker marker = ptVis.markers.get(i);
+//      float lat = marker.loc.getLat();
+//      float lon = marker.loc.getLon();
+//      float angle = int(marker.angle);
+//      PImage currentImg = loadImage("http://maps.googleapis.com/maps/api/streetview?size="+imgWidth+"x"+imgHeight+"&location="+lat+",%20"+lon+"&fov=120&heading="+angle+"&pitch=00&sensor=false&sensor=false.png");
+//      println("loaded image number "+i);
+//      currentImg.resize(int(wide), int(tall));
+//      stylePgs(i, currentImg);
+//    }
     for(int i = 0; i<imgs.length; i++){
       imgs[i] = loadImage("streetview_images/"+i+".jpg");
     }
