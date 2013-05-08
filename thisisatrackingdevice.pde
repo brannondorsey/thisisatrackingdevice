@@ -33,7 +33,7 @@ String fileToParse = "chicago_tour.gpx";
 color c = #3475CE;
 
 void setup() {
-  size(screen.width, screen.height*4/5, GLConstants.GLGRAPHICS);
+  size(screen.width, screen.height, GLConstants.GLGRAPHICS);
   smooth();
   noStroke();
   

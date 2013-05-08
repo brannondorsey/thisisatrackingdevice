@@ -1,11 +1,9 @@
 class StreetView {
   Location hoveredLoc;
-  PGraphics[] pgs;
   int currentImageIndex = 0;
-
   int imgHeight = 400; 
   int imgWidth = 640;
-  int gifFrame = 0;
+  PImage[] imgs;
   float wide;
   float tall;
   float aspectRatio;
@@ -14,9 +12,9 @@ class StreetView {
   StreetView() {
     aspectRatio = imgWidth/imgHeight;
     wide = screen.width;
-    tall = screen.height;//wide/aspectRatio;
-    pgs = new PGraphics[ptVis.markers.size()];
-    for (int i = 0; i < ptVis.markers.size(); i++) {
+    tall = screen.height; 
+    imgs = new PImage[ptVis.markers.size()];
+    for (int i = 0; i < imgs.length; i++) {
       PointMarker marker = ptVis.markers.get(i);
       float lat = marker.loc.getLat();
       float lon = marker.loc.getLon();
@@ -26,10 +24,13 @@ class StreetView {
       currentImg.resize(int(wide), int(tall));
       stylePgs(i, currentImg);
     }
+    for(int i = 0; i<imgs.length; i++){
+      imgs[i] = loadImage("streetview_images/"+i+".jpg");
+    }
   } 
 
   void display() {
-    image(pgs[currentImageIndex], 0, screen.height-tall, wide, tall);
+    image(imgs[currentImageIndex], 0, screen.height-tall, wide, tall);
   }
   
   void updateImage(int i){
@@ -39,20 +40,21 @@ class StreetView {
   void stylePgs(int i, PImage img) {
     int pixelSize = 10;
     img.loadPixels();
-    pgs[i] = createGraphics((int) wide, (int) tall, P2D);
-    pgs[i].beginDraw();
-    pgs[i].background(255);
+    PGraphics pgs = createGraphics((int) wide, (int) tall, P2D);
+    pgs.beginDraw();
+    pgs.background(255);
     for (int x = 0; x < img.width; x += pixelSize) {
       for (int y = 0; y < img.height; y += pixelSize) {
         int pixLoc = int(x + y*img.width);
         int fillColor = img.pixels[pixLoc];
-        pgs[i].fill(fillColor);
-        pgs[i].noStroke();
-        pgs[i].stroke(0);
-        pgs[i].rect(x, y, pixelSize, pixelSize);
+        pgs.fill(fillColor);
+        pgs.noStroke();
+        pgs.stroke(0);
+        pgs.rect(x, y, pixelSize, pixelSize);
       }
     }
-    pgs[i].endDraw();
+    pgs.endDraw();
+    pgs.save("streetview_images/"+i+".jpg");
   }
 }
 

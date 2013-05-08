@@ -22,7 +22,6 @@ class PointMarker {
     loc = _loc;
     nextLoc = _nextLoc;
     index = _index;
-    println("this markers index is "+index);
     oS = 15;
     oMaxS = 30;
     oMinS = 15;

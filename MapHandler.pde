@@ -5,7 +5,7 @@ class MapHandler{
  int maxZoom = 18;
  float rotAngle = 0.0;
  float rotIncrement = 0.05;
- float oIncrement = 6; //original increment
+ float oIncrement = 7; //original increment
  float increment;
  boolean cPressed = false; //clockwise
  boolean cCPressed = false; //counter clockwise
