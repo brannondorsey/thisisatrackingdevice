@@ -19,6 +19,7 @@ import java.util.Calendar;
 import java.text.ParseException;
 
 UnfoldingMap map;
+EventDispatcher eventDispatcher;
 MapHandler mapHand;
 GPXHandler gpxHandler;
 PointVisualization ptVis;
@@ -37,12 +38,13 @@ void setup() {
   noStroke();
   
   map = new UnfoldingMap(this, new OpenStreetMap.CloudmadeProvider("038dee0bec3441f495c0dee8b72467fd", 93093));
-  MapUtils.createDefaultEventDispatcher(this, map);
+  eventDispatcher = MapUtils.createDefaultEventDispatcher(this, map);
+  eventDispatcher.unregister(map, "pan", map.getId());
   XMLElement gpxDoc = new XMLElement(this, fileToParse);
   gpxHandler = new GPXHandler(gpxDoc);
   ptVis = new PointVisualization(gpxHandler.trkpts);
   mapHand = new MapHandler();
-  mapHand.initPos();
+  //mapHand.initPos();
   
   linePoints = new SimpleLinesMarker(gpxHandler.getLocations()); 
   ptVis.createMarkers();
@@ -58,8 +60,8 @@ void setup() {
 }
 
 void draw() {
-  mapHand.handleZoom();
-  mapHand.rotateMap();
+  mapHand.panMapIfNeeded();
+  mapHand.rotateMapIfNeeded();
   map.draw();
   for(int i = 0; i < ptVis.markers.size(); i++){
     PointMarker currentMarker = ptVis.markers.get(i);
@@ -79,17 +81,32 @@ void mousePressed(){
  if(info.checkIsNearby(mouseX, mouseY) && !contains(overMarkers)) info.addStopwatch(); 
  if(contains(overMarkers) && !strView.displaying) strView.displaying = true;
  else strView.displaying = false;
+ eventDispatcher.register(map, "pan", map.getId());
+}
+
+void mouseReleased(){
+  eventDispatcher.unregister(map, "pan", map.getId());
 }
 
 void keyPressed(){
   if(key == '=') mapHand.zoomIn();
   else if(key == ' ') mapHand.cPressed = true;
   else if(keyCode == 157) mapHand.cCPressed = true;
+  if(keyCode == UP) mapHand.u = true;
+  if(keyCode == RIGHT) mapHand.r = true;
+  if(keyCode == DOWN) mapHand.d = true;
+  if(keyCode == LEFT) mapHand.l = true;
+  if(keyCode == SHIFT) mapHand.increment = mapHand.oIncrement*2;
 }
 
 void keyReleased(){
   if(key == ' ') mapHand.cPressed = false;
   else if(keyCode == 157) mapHand.cCPressed = false;
+  if(keyCode == UP) mapHand.u = false;
+  if(keyCode == RIGHT) mapHand.r = false;
+  if(keyCode == DOWN) mapHand.d = false;
+  if(keyCode == LEFT) mapHand.l = false;
+  if(keyCode == SHIFT) mapHand.increment = mapHand.oIncrement;
 }
 
 void setMouse(){
