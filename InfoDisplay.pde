@@ -6,6 +6,7 @@ class InfoDisplay {
   color secondary;
   PImage watchImg;
   PImage waypointImg;
+  PImage compassImg;
   int tSize;
   boolean trackColored = false;
   int opacity = 0;
@@ -27,7 +28,20 @@ class InfoDisplay {
     textFont(font);
     watchImg = loadImage("watch.png");
     waypointImg = loadImage("waypoint.png");
+    compassImg = loadImage("compass.png");
     secondary = color(#4f4f4f);
+  }
+  
+  void displayCompass(){
+    int x = 90;
+    int y = 90;
+    tint(255, 200);
+    pushMatrix();
+    translate(x, y);
+    rotate(mapHand.rotAngle);
+    image(compassImg, -x/2, -y/2, x, y);
+    popMatrix();
+    tint(255, 255);
   }
 
   void displayTimeString(int mx, int my) {

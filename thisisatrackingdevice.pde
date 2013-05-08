@@ -73,6 +73,7 @@ void draw() {
   }
   info.displayTimeString(mouseX, mouseY);
   info.displayStopwatches();
+  info.displayCompass();
   if(strView.displaying) strView.display();
   setMouse();
 }
