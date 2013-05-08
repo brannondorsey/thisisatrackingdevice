@@ -44,7 +44,7 @@ class PointMarker {
   //updates screen positions
   void update() {
     pos = m.getScreenPosition(map);
-    if(map.getZoomLevel() >= maxZoom-1){
+    if(map.getZoomLevel() >= mapHand.maxZoom-1){
       s = oS*1.5;
       maxS = oMaxS*1.5;
       minS = oMinS*1.5;
@@ -72,7 +72,7 @@ class PointMarker {
 
     pushMatrix();
     translate(pos.x, pos.y);
-    rotate(radians(angle));
+    rotate(radians(angle)+mapHand.rotAngle);
     image(markerImg, -s/2, -s/2, s, s);
     popMatrix();
   }

@@ -19,6 +19,7 @@ import java.util.Calendar;
 import java.text.ParseException;
 
 UnfoldingMap map;
+MapHandler mapHand;
 GPXHandler gpxHandler;
 PointVisualization ptVis;
 StreetView strView;
@@ -26,8 +27,6 @@ TimeHandler timeHand;
 InfoDisplay info;
 Location[] pts;
 SimpleLinesMarker linePoints;
-int maxZoom;
-int zoom;
 boolean[] overMarkers;
 String fileToParse = "chicago_tour.gpx";
 color c = #3475CE;
@@ -37,20 +36,13 @@ void setup() {
   smooth();
   noStroke();
   
-  int maxPanningDistance = 10; // in km
-  zoom = 15; //13 or 14 or 17
-  maxZoom = 18;
-
   map = new UnfoldingMap(this, new OpenStreetMap.CloudmadeProvider("038dee0bec3441f495c0dee8b72467fd", 93093));
   MapUtils.createDefaultEventDispatcher(this, map);
   XMLElement gpxDoc = new XMLElement(this, fileToParse);
   gpxHandler = new GPXHandler(gpxDoc);
   ptVis = new PointVisualization(gpxHandler.trkpts);
-  
-  Location cent = gpxHandler.getCenter();
-  map.zoomAndPanTo(cent, zoom);
-  map.setPanningRestriction(cent, maxPanningDistance);
-  map.setZoomRange(zoom-1, maxZoom);
+  mapHand = new MapHandler();
+  mapHand.initPos();
   
   linePoints = new SimpleLinesMarker(gpxHandler.getLocations()); 
   ptVis.createMarkers();
@@ -59,14 +51,15 @@ void setup() {
   timeHand = new TimeHandler();
   overMarkers = new boolean[ptVis.markers.size()];
   
+  
   linePoints.setColor(c);
   linePoints.setStrokeWeight(3);
   map.addMarkers(linePoints);
 }
 
 void draw() {
-  if(strView.displaying) map.setZoomRange(map.getZoomLevel(), map.getZoomLevel());
-  else map.setZoomRange(zoom-1, maxZoom);
+  mapHand.handleZoom();
+  mapHand.rotateMap();
   map.draw();
   for(int i = 0; i < ptVis.markers.size(); i++){
     PointMarker currentMarker = ptVis.markers.get(i);
@@ -86,6 +79,17 @@ void mousePressed(){
  if(info.checkIsNearby(mouseX, mouseY) && !contains(overMarkers)) info.addStopwatch(); 
  if(contains(overMarkers) && !strView.displaying) strView.displaying = true;
  else strView.displaying = false;
+}
+
+void keyPressed(){
+  if(key == '=') mapHand.zoomIn();
+  else if(key == ' ') mapHand.cPressed = true;
+  else if(keyCode == 157) mapHand.cCPressed = true;
+}
+
+void keyReleased(){
+  if(key == ' ') mapHand.cPressed = false;
+  else if(keyCode == 157) mapHand.cCPressed = false;
 }
 
 void setMouse(){
