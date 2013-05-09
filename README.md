@@ -9,7 +9,7 @@
 This GitHub repo holds all of the source files for the interactive map software created for the forthcoming *This is a Tracking Device*
 project:
 
->Small metal cubes with the text \ÒThis is a Tracking Device\Ó will be placed around public downtown Chicago.
+>Small metal cubes with the text 'This is a Tracking Device' will be placed around public downtown Chicago.
 >Inside each sealed box is a tracking device with a lifespan of 7 days. The data from the location of each box is logged every 3 minutes and eventually
 >visualized in the gallery space using the above software. Public interaction with the Tracker Cubes is entirely voluntary although
 >no information is provided on the cubes themselves.
