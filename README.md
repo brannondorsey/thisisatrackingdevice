@@ -1,10 +1,10 @@
 #This is a Tracking Device
 
-![Map Image]("readme_images/overview.png")
+![Map Image](readme_images/overview.png)
 
-![Close up map Image]("readme_images/time_elapsed.png")
+![Close up map Image](readme_images/time_elapsed.png)
 
-![Street View Image]("readme_images/street_view.png")
+![Street View Image](readme_images/street_view.png)
 
 This GitHub repo holds all of the source files for the interactive map software created for the forthcoming *This is a Tracking Device*
 project:
@@ -19,7 +19,7 @@ project:
 >artist and viewers.
 
 This software was created using the excellent [Unfolding Maps](http://unfoldingmaps.org/) librabry for Processing. It is intended to be a
-suplementary approach by which to explore the data collected from *This is a Tracking Device*. Map features include:
+suplementary approach by which to explore the data collected from This is a Tracking Device. Map features include:
 
 + Draw interactive routes using GPX data*
 + View timestamps of gps trackpoints by hovering over the route
@@ -28,4 +28,5 @@ suplementary approach by which to explore the data collected from *This is a Tra
 + Access pixelated Google Street View image of locations by clicking circular waypoints
 + Use intuitive controls for rotatation, panning, and zooming of the map 
 
-\*maps auto-zoom to view locations represented in the .gpx data file. This feature does not yet support 
+\*maps auto-pans to view locations represented in the .gpx data file. This feature does not yet support auto-zooming and some values may need to
+bee hard coded into each sketch depending on the number of trackpoints in the .gpx file to avoid recursion errors.
