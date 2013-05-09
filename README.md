@@ -28,5 +28,5 @@ suplementary approach by which to explore the data collected from *This is a Tra
 + Access pixelated Google Street View image of locations by clicking circular waypoints
 + Use intuitive controls for rotatation, panning, and zooming of the map 
 
-\*maps auto-pans to view locations represented in the .gpx data file. This feature does not yet support auto-zooming and some values may need to
+\*map auto-pans to view locations represented in the .gpx data file. This feature does not yet support auto-zooming and some values may need to
 bee hard coded into each sketch depending on the number of trackpoints in the .gpx file to avoid recursion errors.
